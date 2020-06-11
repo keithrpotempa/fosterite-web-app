@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import { spacing } from '@material-ui/system';
 import Typography from '@material-ui/core/Typography';
-import moment from 'moment'
+import { momentManager } from '../../modules'
 
 const useStyles = makeStyles({
   root: {
@@ -29,17 +29,6 @@ const useStyles = makeStyles({
 export default function CatCard(props) {
   const cat = props.cat
   const classes = useStyles();
-  const getAge = (dateString) => {
-    /* Note: 
-      If a birthdate is unknown, it is listed as
-      null in the database
-    */ 
-    if (dateString) {
-      return moment(dateString, "YYYY-MM-DD").fromNow(true)
-    } else {
-      return "Unknown"
-    }
-  }
 
   return (
     <>
@@ -52,7 +41,7 @@ export default function CatCard(props) {
             Adoption Status: {cat.adoption_status_id}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="div">
-            Age: {getAge(cat.birth_date)}
+            Age: {momentManager.getAge(cat.birth_date)}
           </Typography>
         </CardContent>
         <CardActions>

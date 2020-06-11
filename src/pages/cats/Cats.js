@@ -20,7 +20,7 @@ const Cats = props => {
   return (
     <>
       <h1>Cats Page</h1>
-      <Box display="flex" mx="auto" p={1}>
+      <Box display="flex" mx="auto" p={1} flexWrap="wrap">
         {catList.map( cat => (
           <CatCard
             key={cat.id}

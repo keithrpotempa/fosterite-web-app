@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import { spacing } from '@material-ui/system';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment'
 
@@ -28,7 +29,6 @@ const useStyles = makeStyles({
 export default function CatCard(props) {
   const cat = props.cat
   const classes = useStyles();
-  
   const getAge = (dateString) => {
     /* Note: 
       If a birthdate is unknown, it is listed as
@@ -42,21 +42,23 @@ export default function CatCard(props) {
   }
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        title={cat.name}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="div">
-          Adoption Status: {cat.adoption_status_id}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="div">
-          Age: {getAge(cat.birth_date)}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+    <>
+      <Card className={classes.root} m={10} p={1}>
+        <CardHeader
+          title={cat.name}
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="div">
+            Adoption Status: {cat.adoption_status_id}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="div">
+            Age: {getAge(cat.birth_date)}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">Learn More</Button>
+        </CardActions>
+      </Card>
+    </>
   );
 }

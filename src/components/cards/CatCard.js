@@ -45,7 +45,14 @@ export default function CatCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Learn More</Button>
+          {/* TODO: Change from href, it's forcing a refresh */}
+          <Button 
+            variant="contained" 
+            color="primary" 
+            href={`cats/${cat.id}`}
+          >
+            Details
+          </Button>
         </CardActions>
       </Card>
     </>

@@ -2,9 +2,11 @@ import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import moment from 'moment'
 
 const useStyles = makeStyles({
   root: {
@@ -23,27 +25,34 @@ const useStyles = makeStyles({
   },
 });
 
-export default CatCard(props) {
+export default function CatCard(props) {
   const cat = props.cat
   const classes = useStyles();
   
+  const getAge = (dateString) => {
+    /* Note: 
+      If a birthdate is unknown, it is listed as
+      null in the database
+    */ 
+    if (dateString) {
+      return moment(dateString, "YYYY-MM-DD").fromNow(true)
+    } else {
+      return "Unknown"
+    }
+  }
+
   return (
     <Card className={classes.root}>
+      <CardHeader
+        title={cat.name}
+      />
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {cat.name}
+        <Typography variant="body2" color="textSecondary" component="div">
+          Adoption Status: {cat.adoption_status_id}
         </Typography>
-        <Typography variant="h5" component="h2">
-          TODO AGE
+        <Typography variant="body2" color="textSecondary" component="div">
+          Age: {getAge(cat.birth_date)}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          Status
-        </Typography>
-        // <Typography variant="body2" component="p">
-        //   well meaning and kindly.
-        //   <br />
-        //   {'"a benevolent smile"'}
-        // </Typography>
       </CardContent>
       <CardActions>
         <Button size="small">Learn More</Button>

@@ -6,23 +6,45 @@ import {
   // Redirect,
   // useHistory,
 } from "react-router-dom";
-import { Cats } from "./cats" 
+import { Cats, CatDetails } from "./cats" 
 import { NavBar } from "../components"
+import { Container } from '@material-ui/core';
 
 const Routes = props => {
   return (
     <Router>
       <NavBar 
       />
-      <Switch>
-        <Route
-          exact
-          path="/cats"
-          render={(props) => 
-            <Cats {...props} />
-          }
-        />
-      </Switch>
+
+      <Container maxWidth="md">
+
+        {/* Cat List */}
+        <Switch>
+          <Route
+            exact
+            path="/cats"
+            render={(props) => 
+              <Cats {...props} />
+            }
+          />
+        </Switch>
+
+        {/* Cat Details */}
+        <Switch>
+          <Route
+            exact
+            path="/cats/:catId(\d+)"
+            render={(props) => (
+              <CatDetails
+                catId={parseInt(props.match.params.catId)}
+                {...props}
+              />
+            )}
+          />
+        </Switch>
+
+      </Container>
+
     </Router>
   )
 }

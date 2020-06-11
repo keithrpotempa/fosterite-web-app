@@ -7,10 +7,13 @@ import {
   // useHistory,
 } from "react-router-dom";
 import { Cats } from "./cats" 
+import { NavBar } from "../components"
 
 const Routes = props => {
   return (
     <Router>
+      <NavBar 
+      />
       <Switch>
         <Route
           exact

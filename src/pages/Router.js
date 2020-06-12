@@ -6,7 +6,7 @@ import {
   // Redirect,
   // useHistory,
 } from "react-router-dom";
-import { Cats, CatDetails } from "./cats" 
+import { Cats, CatDetails, CatCreate } from "./cats" 
 import { NavBar } from "../components"
 import { Container } from '@material-ui/core';
 
@@ -18,8 +18,9 @@ const Routes = props => {
 
       <Container maxWidth="md">
 
-        {/* Cat List */}
         <Switch>
+
+          {/* Cat List */}
           <Route
             exact
             path="/cats"
@@ -27,10 +28,8 @@ const Routes = props => {
               <Cats {...props} />
             }
           />
-        </Switch>
 
-        {/* Cat Details */}
-        <Switch>
+          {/* Cat Details */}
           <Route
             exact
             path="/cats/:catId(\d+)"
@@ -41,6 +40,16 @@ const Routes = props => {
               />
             )}
           />
+
+          {/* Cat Creation Form */}
+          <Route
+            exact
+            path="/cats/new"
+            render={(props) =>
+              <CatCreate {...props}/>
+            }
+          />
+
         </Switch>
 
       </Container>

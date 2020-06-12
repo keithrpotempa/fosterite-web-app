@@ -4,6 +4,7 @@ import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { catManager, momentManager } from "../../modules";
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +23,11 @@ export default function CatDetails (props) {
   const getCat = () => {
     catManager.getCat(props.catId)
       .then(setCat)
+  }
+
+  const handleDelete = () => {
+    catManager.delete(props.catId)
+      .then(props.history.push('/cats'))
   }
 
   useEffect(() => {
@@ -97,6 +103,13 @@ export default function CatDetails (props) {
           Last Modified: {momentManager.getMomentFromNow(cat.modified_date)}
         </Grid>
       </Grid>
+      <Button 
+        variant="contained" 
+        color="primary" 
+        onClick={handleDelete}
+      >
+        Delete
+      </Button>
     </>
   )
 }

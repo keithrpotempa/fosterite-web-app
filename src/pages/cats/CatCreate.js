@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { makeStyles } from '@material-ui/core/styles';
 import { CatForm } from "../../components"
-import { catManager } from "../../modules";
+import { catManager, formHandler } from "../../modules";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -24,24 +24,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CatCreate = props => {
-  const [formData, setFormData] = useState({})
-
-  const handleFieldChange = evt => {
-    const stateToChange = { ...formData };
-    stateToChange[evt.target.id] = evt.target.value;
-    setFormData(stateToChange);
-  };
-
-  const gatherFormData = () => {
-    const formdata = new FormData(formData);
-    return formdata
-  }
+  const [formState, setFormState] = useState(
+    // FIXME: once auth is implemented
+    {"creator_id": 1}
+  )
+  const handleFieldChange = (evt) => formHandler.handleFieldChange(evt, formState, setFormState);
 
   const handleSubmit = evt => {
     evt.preventDefault();
     // const token = window.sessionStorage.getItem("token");
-
-    const formdata = gatherFormData()
+    const formdata = formHandler.gatherFormData(formState)
     // const token = sessionStorage.getItem("token")
     catManager.post(formdata)
       .then((resp) => {
@@ -58,7 +50,7 @@ const CatCreate = props => {
         classes={useStyles()}
         handleFieldChange={handleFieldChange}
         handleSubmit={handleSubmit}
-        formData={formData}
+        formData={formState}
       />
     </>
   )

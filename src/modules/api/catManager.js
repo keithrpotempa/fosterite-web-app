@@ -18,5 +18,30 @@ export default {
         // "Authorization": `Token ${token}`
       }
     })
+  },
+  getAdoptionStatusList() {
+    return fetch(`${baseurl}/adoptionstatus`)
+      .then((resp) => resp.json())
+  },
+  post(obj){
+    // Note: Content-type cannot be set when uploading a file
+    
+    // TODO: uncomment once auth is implemented
+    const headers = {
+      // Authorization: `Token ${token}`,
+    }
+
+    // If there is no image, 
+    // then content-type and accept are needed in the fetch call
+    if (obj.image_path === null) { 
+      headers["Accept"] = "application/json";
+      headers["Content-Type"] = "application/json";
+    } 
+
+    return fetch(`${baseurl}/cats`, {
+      method: "POST",
+      headers: headers,
+      body: obj
+    }).then((resp) => resp.json())
   }
 }

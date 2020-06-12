@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import { catManager } from "../../modules";
 
 const CatForm = props => {
-  const [adoptionStatusList, setAdoptionStatusList] = useState();
+  const [adoptionStatusList, setAdoptionStatusList] = useState([]);
 
   let isEdit = false
   if (Object.keys(props.formData).length !== 0) {
@@ -14,12 +18,13 @@ const CatForm = props => {
   const handleFieldChange = props.handleFieldChange;
   const handleSubmit = props.handleSubmit;
 
-  // const getAdoptionStatusList = () => {
-
-  // }
+  const getAdoptionStatusList = () => {
+    catManager.getAdoptionStatusList()
+      .then(setAdoptionStatusList)
+  }
 
   useEffect( () => {
-    // setUserToEdit()
+    getAdoptionStatusList()
   }, [])
 
   return (
@@ -45,22 +50,45 @@ const CatForm = props => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* CREATOR ID */}
-              {/* <SELECT/> */}
+            {/* CREATOR ID */}
+            {/* <SELECT/> */}
+            {/* TODO: SELECT SEX */}
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="date"
+                id="birth_date"
+                name="birth_date"
                 label="Birthday"
                 type="date"
                 className={classes.textField}
+                onChange={handleFieldChange}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
             </Grid>
             {/* TODO: Stretch Goal: Breed */}
-            {/* TODO: Adoption Status */}
+            <InputLabel id="adoption_status">Adoption Status</InputLabel>
+              <Select
+                inputProps={{
+                  required: true,
+                }}
+                required
+                name="adoption_status"
+                fullWidth
+                labelId="adoptionStatus"
+                id="adoption_status"
+                onChange={handleFieldChange}
+              >
+                <MenuItem value="">Select</MenuItem>
+                {adoptionStatusList.map((status, i) => (
+                  <MenuItem key={i} value={status.id}>
+                    {status.name}
+                  </MenuItem>
+                ))}
+              </Select>
+
+
             {/* TODO: If Adopted, 
                 Adopted Date,
                 Adopted Id 

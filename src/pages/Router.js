@@ -6,11 +6,20 @@ import {
   // Redirect,
   // useHistory,
 } from "react-router-dom";
-import { Cats, CatDetails, CatCreate, CatEdit } from "./cats" 
+import { Cats, CatDetails, CatCreate, CatEdit } from "./cats"
+import { Register } from "./users" 
 import { NavBar } from "../components"
 import { Container } from '@material-ui/core';
 
 const Routes = props => {
+  const isAuthenticated = () => sessionStorage.getItem("token") !== null;
+  const [hasUser, setHasUser] = useState(isAuthenticated());
+
+  const setUserToken = (resp) => {
+    sessionStorage.setItem("token", resp.token);
+    setHasUser(isAuthenticated());
+  };
+
   return (
     <Router>
       <NavBar 
@@ -57,6 +66,18 @@ const Routes = props => {
             render={(props) => (
               <CatEdit
                 catId={parseInt(props.match.params.catId)}
+                {...props}
+              />
+            )}
+          />
+
+          {/* User Registration Form */}
+          <Route
+            exact
+            path="/register"
+            render={(props) => (
+              <Register
+                setUserToken={setUserToken}
                 {...props}
               />
             )}

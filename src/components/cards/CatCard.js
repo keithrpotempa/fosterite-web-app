@@ -45,11 +45,10 @@ export default function CatCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          {/* TODO: Change from href, it's forcing a refresh */}
           <Button 
             variant="contained" 
             color="primary" 
-            href={`cats/${cat.id}`}
+            onClick={() => props.history.push(`cats/${cat.id}`)}
           >
             Details
           </Button>

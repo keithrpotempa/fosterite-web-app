@@ -25,6 +25,7 @@ const Cats = props => {
           <CatCard
             key={cat.id}
             cat={cat}
+            {...props}
           />
         ))}
       </Box>

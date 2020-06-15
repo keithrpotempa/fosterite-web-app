@@ -106,6 +106,13 @@ export default function CatDetails (props) {
       <Button 
         variant="contained" 
         color="primary" 
+        onClick={() => props.history.push(`/cats/edit/${props.catId}`)}
+      >
+        Edit
+      </Button>
+      <Button 
+        variant="contained" 
+        color="primary" 
         onClick={handleDelete}
       >
         Delete

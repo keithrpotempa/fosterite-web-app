@@ -35,7 +35,7 @@ const CatEdit = props => {
     // const token = window.sessionStorage.getItem("token");
     const formdata = formHandler.gatherFormData(formState)
     // const token = sessionStorage.getItem("token")
-    catManager.put(formdata)
+    catManager.put(formdata, props.catId)
       .then((resp) => {
         props.history.push({
           pathname: `/cats/${resp.id}`
@@ -43,9 +43,14 @@ const CatEdit = props => {
       })
   };
 
+  const parseCat = (cat) => {
+    cat.adoption_status = cat.adoption_status_id
+    return cat
+  }
+
   const getCat = () => {
     catManager.getCat(props.catId)
-      .then(setFormState)
+      .then(resp => setFormState(parseCat(resp)))
   }
 
   useEffect(() => {

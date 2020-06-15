@@ -43,5 +43,26 @@ export default {
       headers: headers,
       body: obj
     }).then((resp) => resp.json())
+  },
+  put(obj, id){
+    // Note: Content-type cannot be set when uploading a file
+    
+    // TODO: uncomment once auth is implemented
+    const headers = {
+      // Authorization: `Token ${token}`,
+    }
+
+    // If there is no image, 
+    // then content-type and accept are needed in the fetch call
+    if (obj.image_path === null) { 
+      headers["Accept"] = "application/json";
+      headers["Content-Type"] = "application/json";
+    } 
+
+    return fetch(`${baseurl}/cats/${id}`, {
+      method: "PUT",
+      headers: headers,
+      body: obj
+    }).then((resp) => resp.json())
   }
 }

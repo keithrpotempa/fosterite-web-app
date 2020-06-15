@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from '@material-ui/core/FormControl';
 import { catManager } from "../../modules";
 
 const CatForm = props => {
@@ -27,12 +28,12 @@ const CatForm = props => {
 
   useEffect( () => {
     getAdoptionStatusList()
-  }, [])
+  }, [isEdit])
 
   return (
     <>
       <div>
-        <form 
+        <FormControl 
           className={classes.form} 
           onSubmit={handleSubmit}
           autoComplete="on"
@@ -60,12 +61,14 @@ const CatForm = props => {
                   inputProps={{
                     required: true,
                   }}
+                  native={false}
                   required
                   name="sex"
                   fullWidth
                   labelId="sex"
                   id="sex"
                   onChange={handleFieldChange}
+                  value={isEdit ? formState.sex : ""}
                 >
                   <MenuItem value="">Select</MenuItem>
                   <MenuItem key="Male" value="Male">Male</MenuItem>
@@ -84,6 +87,7 @@ const CatForm = props => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={isEdit ? formState.birth_date : null}
               />
             </Grid>
 
@@ -91,13 +95,14 @@ const CatForm = props => {
             <Grid item xs={12} sm={6}>
               <TextField
                 id="fixed_date"
-                label="fixed_date"
+                label="Fixed Date"
                 type="date"
                 className={classes.textField}
                 onChange={handleFieldChange}
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={isEdit ? formState.fixed_date : null}
               />
             </Grid>
 
@@ -110,9 +115,10 @@ const CatForm = props => {
                 required
                 name="adoption_status"
                 fullWidth
-                labelId="adoptionStatus"
+                labelId="adoption_status"
                 id="adoption_status"
                 onChange={handleFieldChange}
+                value={isEdit ? parseInt(formState.adoption_status) : null}
               >
                 <MenuItem value="">Select</MenuItem>
                 {adoptionStatusList.map((status, i) => (
@@ -130,13 +136,14 @@ const CatForm = props => {
                   <Grid item xs={12} sm={4}>
                     <TextField
                       id="adopted_date"
-                      label="adopted_date"
+                      label="Adopted Date"
                       type="date"
                       className={classes.textField}
                       onChange={handleFieldChange}
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      value={isEdit ? formState.adopted_date : null}
                     />
                   </Grid>
                 </>
@@ -158,7 +165,7 @@ const CatForm = props => {
           >
             Submit
           </Button>
-        </form>
+        </FormControl>
       </div>
     </>
   ) 

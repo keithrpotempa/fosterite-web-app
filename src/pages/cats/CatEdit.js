@@ -36,9 +36,9 @@ const CatEdit = props => {
     const formdata = formHandler.gatherFormData(formState)
     // const token = sessionStorage.getItem("token")
     catManager.put(formdata, props.catId)
-      .then((resp) => {
+      .then(() => {
         props.history.push({
-          pathname: `/cats/${resp.id}`
+          pathname: `/cats/${props.catId}`
         })
       })
   };

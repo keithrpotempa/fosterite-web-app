@@ -44,9 +44,9 @@ export default {
       body: obj
     }).then((resp) => resp.json())
   },
+  // FIXME: CRASHING EVEN THOUGHT IT IS UPDATING...
   put(obj, id){
     // Note: Content-type cannot be set when uploading a file
-    
     // TODO: uncomment once auth is implemented
     const headers = {
       // Authorization: `Token ${token}`,
@@ -63,6 +63,6 @@ export default {
       method: "PUT",
       headers: headers,
       body: obj
-    }).then((resp) => resp.json())
+    })
   }
 }

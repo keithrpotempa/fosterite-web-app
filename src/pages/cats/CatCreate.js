@@ -50,7 +50,7 @@ const CatCreate = props => {
         classes={useStyles()}
         handleFieldChange={handleFieldChange}
         handleSubmit={handleSubmit}
-        formData={formState}
+        formState={formState}
       />
     </>
   )

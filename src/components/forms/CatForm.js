@@ -10,13 +10,15 @@ import { catManager } from "../../modules";
 const CatForm = props => {
   const [adoptionStatusList, setAdoptionStatusList] = useState([]);
 
-  let isEdit = false
-  if (Object.keys(props.formData).length !== 0) {
-    isEdit = true
-  }
   const classes = props.classes;
   const handleFieldChange = props.handleFieldChange;
   const handleSubmit = props.handleSubmit;
+  const formState = props.formState;
+
+  let isEdit = false
+  if (Object.keys(props.formState).length !== 0) {
+    isEdit = true
+  }
 
   const getAdoptionStatusList = () => {
     catManager.getAdoptionStatusList()
@@ -46,15 +48,32 @@ const CatForm = props => {
                 label="Name"
                 autoFocus
                 onChange={handleFieldChange}
-                value={isEdit ? props.formData.name : null}
+                value={isEdit ? props.formState.name : null}
               />
             </Grid>
+
+            {/* TODO: CREATOR ID, once auth is built */}
+
             <Grid item xs={12} sm={6}>
-            {/* CREATOR ID */}
-            {/* <SELECT/> */}
-            {/* TODO: SELECT SEX */}
+              <InputLabel id="sex">Sex</InputLabel>
+                <Select
+                  inputProps={{
+                    required: true,
+                  }}
+                  required
+                  name="sex"
+                  fullWidth
+                  labelId="sex"
+                  id="sex"
+                  onChange={handleFieldChange}
+                >
+                  <MenuItem value="">Select</MenuItem>
+                  <MenuItem key="Male" value="Male">Male</MenuItem>
+                  <MenuItem key="Female" value="Female">Female</MenuItem>
+                </Select>
             </Grid>
-            <Grid item xs={12}>
+            
+            <Grid item xs={12} sm={6}>
               <TextField
                 id="birth_date"
                 name="birth_date"
@@ -67,7 +86,22 @@ const CatForm = props => {
                 }}
               />
             </Grid>
+
             {/* TODO: Stretch Goal: Breed */}
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="fixed_date"
+                label="fixed_date"
+                type="date"
+                className={classes.textField}
+                onChange={handleFieldChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={4}>  
             <InputLabel id="adoption_status">Adoption Status</InputLabel>
               <Select
                 inputProps={{
@@ -87,26 +121,31 @@ const CatForm = props => {
                   </MenuItem>
                 ))}
               </Select>
+            </Grid>
+            
+            {/* Adopted Status 4 is "Adopted", so then we ask for the date and the adopter */}
+            {formState.adoption_status === 4
+              ? <>
+                  {/* TODO: If Adopted, Adopted Id */}
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      id="adopted_date"
+                      label="adopted_date"
+                      type="date"
+                      className={classes.textField}
+                      onChange={handleFieldChange}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+                </>
+              : <>
+                </>
+            }
 
-
-            {/* TODO: If Adopted, 
-                Adopted Date,
-                Adopted Id 
-            */}
             {/* TODO: Optional: Bonded Pair Cat */}
             {/* TODO: Optional: Litter */}
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="fixed_date"
-                label="fixed_date"
-                type="date"
-                className={classes.textField}
-                onChange={handleFieldChange}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
             {/* TODO: Optional: Image Upload */}
 
           </Grid>

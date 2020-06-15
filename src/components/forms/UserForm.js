@@ -2,6 +2,10 @@ import React from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from '@material-ui/core/FormControl';
 
 const UserForm = props => {
   let isEdit = false
@@ -101,14 +105,74 @@ const UserForm = props => {
               variant="outlined"
               required
               fullWidth
-              name="address"
-              label="Address"
-              id="address"
-              autoComplete="address"
+              name="street"
+              label="Street Address"
+              id="street"
               onChange={handleFieldChange}
-              value={isEdit ? props.formData.address : null}
+              value={isEdit ? props.formData.street : null}
             />
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              name="city"
+              label="City"
+              id="city"
+              onChange={handleFieldChange}
+              value={isEdit ? props.formData.city : null}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              name="state"
+              label="State"
+              id="state"
+              onChange={handleFieldChange}
+              value={isEdit ? props.formData.state : null}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              name="zip"
+              label="Zip Code"
+              id="zip"
+              onChange={handleFieldChange}
+              value={isEdit ? props.formData.zip : null}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+              {/* <FormControl> */}
+                <InputLabel id="looking_to_foster">Looking to Foster</InputLabel>
+                  <Select
+                    inputProps={{
+                      required: true,
+                    }}
+                    native={false}
+                    required
+                    name="looking_to_foster"
+                    fullWidth
+                    labelId="looking_to_foster"
+                    id="looking_to_foster"
+                    onChange={handleFieldChange}
+                    // FIXME: If user editing gets implemented
+                    // value={isEdit ? `${props.formData.looking_to_foster}` : ""}
+                  >
+                    <MenuItem value="">Select</MenuItem>
+                    <MenuItem key="Yes" value={true}>Yes</MenuItem>
+                    <MenuItem key="No" value={false}>No</MenuItem>
+                  </Select>
+              {/* </FormControl> */}
+            </Grid>
+
           <Grid item xs={12}>
             <TextField
               variant="outlined"

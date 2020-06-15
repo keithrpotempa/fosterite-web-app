@@ -6,7 +6,7 @@ import {
   // Redirect,
   // useHistory,
 } from "react-router-dom";
-import { Cats, CatDetails, CatCreate } from "./cats" 
+import { Cats, CatDetails, CatCreate, CatEdit } from "./cats" 
 import { NavBar } from "../components"
 import { Container } from '@material-ui/core';
 
@@ -48,6 +48,18 @@ const Routes = props => {
             render={(props) =>
               <CatCreate {...props}/>
             }
+          />
+
+          {/* Cat Edit Form */}
+          <Route
+            exact
+            path="/cats/edit/:catId(\d+)"
+            render={(props) => (
+              <CatEdit
+                catId={parseInt(props.match.params.catId)}
+                {...props}
+              />
+            )}
           />
 
         </Switch>

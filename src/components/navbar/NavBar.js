@@ -20,8 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar() {
+export default function NavBar(props) {
   const classes = useStyles();
+  const hasUser = props.hasUser;
+  const clearUser = props.clearUser;
 
   return (
     <div className={classes.root}>
@@ -42,22 +44,40 @@ export default function NavBar() {
               </Link>
             </Typography>
           </Box>
+
           <Box display="flex" justifyContent="flex-end">
-            <Box p={2}>
-              <Typography variant="h6" className={classes.title}>
-                <Link component={RouterLink} to="/login" color="inherit">
-                  Login
-                </Link>
-              </Typography>
-            </Box>
-            <Box p={2}>
-              <Typography variant="h6" className={classes.title}>
-                <Link component={RouterLink} to="/register" color="inherit">
-                  Register
-                </Link>
-              </Typography>
-            </Box>
+            {hasUser 
+              ? <>
+                  <Box p={2}>
+                    <Typography variant="h6" className={classes.title}>
+                      <Link 
+                        color="inherit"
+                        onClick={() => clearUser()} 
+                      >
+                        Logout
+                      </Link>
+                    </Typography>
+                  </Box>
+                </>
+              : <>
+                  <Box p={2}>
+                    <Typography variant="h6" className={classes.title}>
+                      <Link component={RouterLink} to="/login" color="inherit">
+                        Login
+                      </Link>
+                    </Typography>
+                  </Box>
+                  <Box p={2}>
+                    <Typography variant="h6" className={classes.title}>
+                      <Link component={RouterLink} to="/register" color="inherit">
+                        Register
+                      </Link>
+                    </Typography>
+                  </Box>
+              </>
+            }
           </Box>
+          
         </Toolbar>
       </AppBar>
     </div>

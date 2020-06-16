@@ -7,7 +7,7 @@ import {
   // useHistory,
 } from "react-router-dom";
 import { Cats, CatDetails, CatCreate, CatEdit } from "./cats"
-import { Register } from "./users" 
+import { Register, Login } from "./users" 
 import { NavBar } from "../components"
 import { Container } from '@material-ui/core';
 
@@ -20,9 +20,16 @@ const Routes = props => {
     setHasUser(isAuthenticated());
   };
 
+  const clearUser = () => {
+    sessionStorage.clear();
+    setHasUser(isAuthenticated());
+  };
+
   return (
     <Router>
       <NavBar 
+        hasUser={hasUser}
+        clearUser={clearUser}
       />
 
       <Container maxWidth="md">
@@ -77,6 +84,17 @@ const Routes = props => {
             path="/register"
             render={(props) => (
               <Register
+                setUserToken={setUserToken}
+                {...props}
+              />
+            )}
+          />
+          {/* User Login Form */}
+          <Route
+            exact
+            path="/login"
+            render={(props) => (
+              <Login
                 setUserToken={setUserToken}
                 {...props}
               />

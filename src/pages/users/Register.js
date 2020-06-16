@@ -29,7 +29,6 @@ const Register = (props) => {
     userManager
       .register(user)
       .then((resp) => {
-        console.log(resp)
         if ("token" in resp) {
           props.setUserToken(resp);
           props.history.push("/");

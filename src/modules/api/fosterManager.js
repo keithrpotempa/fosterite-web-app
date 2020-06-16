@@ -5,4 +5,8 @@ export default {
     return fetch(`${baseurl}/fosters`)
       .then((resp) => resp.json())
   },
+  getFoster(id) {
+    return fetch(`${baseurl}/fosters/${id}`)
+      .then((resp) => resp.json())
+  },
 }

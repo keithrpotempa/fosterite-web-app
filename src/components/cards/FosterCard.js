@@ -27,32 +27,42 @@ const useStyles = makeStyles({
 });
 
 export default function FosterCard(props) {
-  const foster = props.foster
+  const user = props.foster
+  // const foster = user.foster
   const classes = useStyles();
 
   return (
     <>
       <Card className={classes.root} m={10} p={1}>
         <CardHeader
-          title={foster.first_name}
+          title={`${user.first_name} ${user.last_name}`}
         />
-        {/* <CardContent>
+        <CardContent>
           <Typography variant="body2" color="textSecondary" component="div">
-            Adoption Status: {foster.adoption_status_id}
+            Looking to Foster: {user.foster.looking_to_foster ? "Yes" : "No"}
           </Typography>
+          {/* TODO: Currently Fostering 
+            Once foster_relationships are implemented
+            if today falls between any foster_relationship's 
+            start - end date 
+          */}
+          {/* TODO: Fostering Experience 
+            Once foster_relationships are implemented
+            if they have any that have passed 
+          */}
           <Typography variant="body2" color="textSecondary" component="div">
-            Age: {momentManager.getAge(foster.birth_date)}
+            Member Since: {momentManager.getMomentFromNow(user.date_joined)}
           </Typography>
         </CardContent>
         <CardActions>
           <Button 
             variant="contained" 
             color="primary" 
-            onClick={() => props.history.push(`cats/${foster.id}`)}
+            onClick={() => props.history.push(`fosters/${user.id}`)}
           >
             Details
           </Button>
-        </CardActions> */}
+        </CardActions>
       </Card>
     </>
   );

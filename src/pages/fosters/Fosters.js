@@ -35,7 +35,10 @@ const Fosters = props => {
       }
       
       <Box display="flex" mx="auto" p={1} flexWrap="wrap">
-        {fosterList.map( foster => (
+        {fosterList
+          // Make sure the user is listed as a foster
+          .filter( foster => foster.foster)
+          .map( foster => (
           <FosterCard
             key={foster.id}
             foster={foster}

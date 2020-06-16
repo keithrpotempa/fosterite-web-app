@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from '@material-ui/core/FormControl';
 
 const UserForm = props => {
   let isEdit = false
@@ -24,11 +23,7 @@ const UserForm = props => {
         autocomplete="on"
       >
         <Grid container spacing={2}>
-          {/* For now, this is the most common error we will be facing */}
-          {props.failedLogin 
-            ? <p>{props.failedLoginMessage}</p>
-            : <></> 
-          }
+
           <Grid item xs={12} sm={6}>
             <TextField
               autoComplete="fname"
@@ -56,16 +51,23 @@ const UserForm = props => {
               value={isEdit ? props.formData.lastName : null}
             />
           </Grid>
+          {/* For now, this is the most common error we will be facing */}
           <Grid item xs={12}>
             <TextField
               variant="outlined"
+              error={props.failedLogin ? true : false}
               required
               fullWidth
               id="username"
               label="Username"
               name="username"
               autoComplete="username"
+              helperText={props.failedLogin 
+                ? props.failedLoginMessage 
+                : ""
+              }
               onChange={handleFieldChange}
+              aria-describedby="component-error-text"
               value={isEdit ? props.formData.username : null}
             />
           </Grid>
@@ -77,7 +79,7 @@ const UserForm = props => {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
+              type="email"
               onChange={handleFieldChange}
               value={isEdit ? props.formData.email : null}
             />
@@ -142,6 +144,7 @@ const UserForm = props => {
               required
               fullWidth
               name="zip"
+              type="number"
               label="Zip Code"
               id="zip"
               onChange={handleFieldChange}
@@ -182,6 +185,7 @@ const UserForm = props => {
               label="Phone Number"
               id="phoneNumber"
               autoComplete="phoneNumber"
+              type="tel"
               onChange={handleFieldChange}
               value={isEdit ? props.formData.phoneNumber : null}
             />

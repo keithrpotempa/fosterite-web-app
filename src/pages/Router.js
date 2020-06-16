@@ -6,9 +6,10 @@ import {
   Redirect,
   // useHistory,
 } from "react-router-dom";
-import { Cats, CatDetails, CatCreate, CatEdit } from "./cats"
-import { Register, Login } from "./users" 
-import { NavBar } from "../components"
+import { Cats, CatDetails, CatCreate, CatEdit } from "./cats";
+import { Fosters, FosterDetails } from "./fosters";
+import { Register, Login } from "./users" ;
+import { NavBar } from "../components";
 import { Container } from '@material-ui/core';
 
 const Routes = props => {
@@ -62,7 +63,6 @@ const Routes = props => {
           />
 
           {/* Cat Creation Form */}
-
           <Route
             exact
             path="/cats/new"
@@ -87,6 +87,31 @@ const Routes = props => {
                 )
               : (<Redirect to="/" />)
             }
+          />
+
+          {/* Foster List */}
+          <Route
+            exact
+            path="/fosters"
+            render={(props) => 
+              <Fosters
+                hasUser={hasUser}
+                {...props} 
+              />
+            }
+          />
+
+          {/* Foster Details */}
+          <Route
+            exact
+            path="/fosters/:fosterId(\d+)"
+            render={(props) => (
+              <FosterDetails
+                fosterId={parseInt(props.match.params.fosterId)}
+                hasUser={hasUser}
+                {...props}
+              />
+            )}
           />
 
           {/* User Registration Form */}

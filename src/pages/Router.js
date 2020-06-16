@@ -3,17 +3,33 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  // Redirect,
+  Redirect,
   // useHistory,
 } from "react-router-dom";
-import { Cats, CatDetails, CatCreate, CatEdit } from "./cats" 
+import { Cats, CatDetails, CatCreate, CatEdit } from "./cats"
+import { Register, Login } from "./users" 
 import { NavBar } from "../components"
 import { Container } from '@material-ui/core';
 
 const Routes = props => {
+  const isAuthenticated = () => sessionStorage.getItem("token") !== null;
+  const [hasUser, setHasUser] = useState(isAuthenticated());
+
+  const setUserToken = (resp) => {
+    sessionStorage.setItem("token", resp.token);
+    setHasUser(isAuthenticated());
+  };
+
+  const clearUser = () => {
+    sessionStorage.clear();
+    setHasUser(isAuthenticated());
+  };
+
   return (
     <Router>
       <NavBar 
+        hasUser={hasUser}
+        clearUser={clearUser}
       />
 
       <Container maxWidth="md">
@@ -25,7 +41,10 @@ const Routes = props => {
             exact
             path="/cats"
             render={(props) => 
-              <Cats {...props} />
+              <Cats
+                hasUser={hasUser}
+                {...props} 
+              />
             }
           />
 
@@ -36,17 +55,21 @@ const Routes = props => {
             render={(props) => (
               <CatDetails
                 catId={parseInt(props.match.params.catId)}
+                hasUser={hasUser}
                 {...props}
               />
             )}
           />
 
           {/* Cat Creation Form */}
+
           <Route
             exact
             path="/cats/new"
             render={(props) =>
-              <CatCreate {...props}/>
+              hasUser 
+              ? (<CatCreate {...props}/>)
+              : (<Redirect to="/" />)
             }
           />
 
@@ -54,12 +77,47 @@ const Routes = props => {
           <Route
             exact
             path="/cats/edit/:catId(\d+)"
-            render={(props) => (
-              <CatEdit
-                catId={parseInt(props.match.params.catId)}
-                {...props}
-              />
-            )}
+            render={(props) => 
+              hasUser
+              ? (
+                  <CatEdit
+                    catId={parseInt(props.match.params.catId)}
+                    {...props}
+                  />
+                )
+              : (<Redirect to="/" />)
+            }
+          />
+
+          {/* User Registration Form */}
+          <Route
+            exact
+            path="/register"
+            render={(props) => 
+              hasUser
+              ? (<Redirect to="/" />) 
+              : (
+                  <Register
+                    setUserToken={setUserToken}
+                    {...props}
+                  />
+                )
+            }
+          />
+          {/* User Login Form */}
+          <Route
+            exact
+            path="/login"
+            render={(props) => 
+              hasUser
+              ? (<Redirect to="/" />) 
+              : (
+                  <Login
+                    setUserToken={setUserToken}
+                    {...props}
+                  />
+                )
+            }
           />
 
         </Switch>

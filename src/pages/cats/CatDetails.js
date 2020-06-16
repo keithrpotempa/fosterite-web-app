@@ -103,20 +103,27 @@ export default function CatDetails (props) {
           Last Modified: {momentManager.getMomentFromNow(cat.modified_date)}
         </Grid>
       </Grid>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onClick={() => props.history.push(`/cats/edit/${props.catId}`)}
-      >
-        Edit
-      </Button>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onClick={handleDelete}
-      >
-        Delete
-      </Button>
+      {/* TODO: Change to only show if user 
+      has proper permissions or created this cat */}
+      {props.hasUser 
+        ? <>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              onClick={() => props.history.push(`/cats/edit/${props.catId}`)}
+            >
+              Edit
+            </Button>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          </>
+        : <></>
+      }
     </>
   )
 }

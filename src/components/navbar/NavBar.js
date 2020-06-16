@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 // import MenuIcon from '@material-ui/icons/Menu';
@@ -33,17 +34,32 @@ export default function NavBar() {
           </IconButton> */}
           <Box display="flex" flexGrow={1} justifyContent="flex-start">
             <Typography variant="h6" className={classes.title}>
-              <Link href="/cats" color="inherit">
+              <Link component={RouterLink} to="/cats" color="inherit">
                 Cats
               </Link>
             </Typography>
             <Typography variant="h6" className={classes.title}>
-              <Link href="#" color="inherit">
+              <Link component={RouterLink} to="/" color="inherit">
                 Fosters
               </Link>
             </Typography>
           </Box>
-          <Button color="inherit">Login</Button>
+          <Box display="flex" justifyContent="flex-end">
+            <Box p={2}>
+              <Typography variant="h6" className={classes.title}>
+                <Link component={RouterLink} to="/login" color="inherit">
+                  Login
+                </Link>
+              </Typography>
+            </Box>
+            <Box p={2}>
+              <Typography variant="h6" className={classes.title}>
+                <Link component={RouterLink} to="/register" color="inherit">
+                  Register
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
         </Toolbar>
       </AppBar>
     </div>

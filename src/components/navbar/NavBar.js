@@ -39,7 +39,7 @@ export default function NavBar(props) {
               </Link>
             </Typography>
             <Typography variant="h6" className={classes.title}>
-              <Link component={RouterLink} to="/" color="inherit">
+              <Link component={RouterLink} to="/fosters" color="inherit">
                 Fosters
               </Link>
             </Typography>

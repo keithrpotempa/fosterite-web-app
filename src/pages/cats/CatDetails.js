@@ -5,6 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { catManager, momentManager, userManager } from "../../modules";
 import Button from '@material-ui/core/Button';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +47,7 @@ export default function CatDetails (props) {
 
   return (
     <>
+    {/* TODO: Break this up. It's getting too big... */}
       {/* Image: cat.image_path */}
       <Grid display="flex" container spacing={3} m={3}>
         <Grid item xs={12}>
@@ -82,7 +85,7 @@ export default function CatDetails (props) {
             }
         </Grid>
         <Grid item xs={4}>
-          Adoption Status: {cat.adoption_status_id}
+          Adoption Status: {cat.adoption_status ? cat.adoption_status.name : ""}
         </Grid>
         {/* NOTE: 4 is the id of "adopted" */}
         {/* TODO: make that not so awkwardly hard-coded */}
@@ -106,9 +109,15 @@ export default function CatDetails (props) {
           Breed: {cat.breed}
         </Grid> */}
 
-        {/* META INFO */}
+        {/* ------------ META INFO ------------ */}
         <Grid item xs={6}>
-          Profile Creator: {`${user.username}`}
+          Profile Creator: 
+          <Link 
+            component={RouterLink} 
+            to={`/fosters/${user.id}`}
+          >
+            {`${user.username}`}
+          </Link>
         </Grid>
         <Grid item xs={6}>
           Profile Creation: {momentManager.getMomentFromNow(cat.created_date)}
@@ -118,6 +127,8 @@ export default function CatDetails (props) {
         </Grid>
 
       </Grid>
+
+      {/* ------------ ACTIONS ------------  */}
       {/* TODO: Change to only show if user 
       has proper permissions or created this cat */}
       {props.hasUser 

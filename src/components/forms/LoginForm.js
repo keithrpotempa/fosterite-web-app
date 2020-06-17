@@ -75,7 +75,7 @@ const LoginForm = (props) => {
           <Typography component="h1" variant="h5">
             Sign in to Iris Station
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={props.handleLogin}>
             {props.failedLogin ? (
               // <Message negative>
                 <p>

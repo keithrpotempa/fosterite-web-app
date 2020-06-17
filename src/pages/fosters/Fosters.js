@@ -55,6 +55,7 @@ const Fosters = props => {
           ? filteredFosterList
           : fosterList
         }
+        {...props}
       />
     </>
   )

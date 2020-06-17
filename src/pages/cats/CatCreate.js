@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CatCreate = props => {
+  // Note: there are more fields than this, 
+  // but these are seeded to keep the app from crashing 
+  // before data is retrieved
   const [formState, setFormState] = useState(
     {
       "name": "",

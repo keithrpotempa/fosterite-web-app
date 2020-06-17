@@ -25,17 +25,19 @@ const useStyles = makeStyles((theme) => ({
 
 const CatEdit = props => {
   const [formState, setFormState] = useState(
-    // FIXME: once auth is implemented
-    {"creator_id": 1}
+    {
+      "name": "",
+      "sex": "",
+      "adoption_status_id": "",      
+    }
   )
   const handleFieldChange = (evt) => formHandler.handleFieldChange(evt, formState, setFormState);
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    // const token = window.sessionStorage.getItem("token");
+    const token = window.sessionStorage.getItem("token");
     const formdata = formHandler.gatherFormData(formState)
-    // const token = sessionStorage.getItem("token")
-    catManager.put(formdata, props.catId)
+    catManager.put(token, formdata, props.catId)
       .then(() => {
         props.history.push({
           pathname: `/cats/${props.catId}`
@@ -43,14 +45,9 @@ const CatEdit = props => {
       })
   };
 
-  const parseCat = (cat) => {
-    cat.adoption_status = cat.adoption_status_id
-    return cat
-  }
-
   const getCat = () => {
     catManager.getCat(props.catId)
-      .then(resp => setFormState(parseCat(resp)))
+      .then(resp => setFormState(resp))
   }
 
   useEffect(() => {
@@ -65,6 +62,7 @@ const CatEdit = props => {
         handleFieldChange={handleFieldChange}
         handleSubmit={handleSubmit}
         formState={formState}
+        isEdit={true}
       />
     </>
   )

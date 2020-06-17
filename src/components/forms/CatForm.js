@@ -15,11 +15,7 @@ const CatForm = props => {
   const handleFieldChange = props.handleFieldChange;
   const handleSubmit = props.handleSubmit;
   const formState = props.formState;
-
-  let isEdit = false
-  if (Object.keys(props.formState).length !== 0) {
-    isEdit = true
-  }
+  const isEdit = props.isEdit;
 
   const getAdoptionStatusList = () => {
     catManager.getAdoptionStatusList()
@@ -28,7 +24,7 @@ const CatForm = props => {
 
   useEffect( () => {
     getAdoptionStatusList()
-  }, [isEdit])
+  }, [formState])
 
   return (
     <>
@@ -49,11 +45,9 @@ const CatForm = props => {
                 label="Name"
                 autoFocus
                 onChange={handleFieldChange}
-                value={isEdit ? props.formState.name : null}
+                value={formState.name}
               />
             </Grid>
-
-            {/* TODO: CREATOR ID, once auth is built */}
 
             <Grid item xs={12} sm={6}>
               <FormControl>
@@ -69,7 +63,7 @@ const CatForm = props => {
                     labelId="sex"
                     id="sex"
                     onChange={handleFieldChange}
-                    value={isEdit ? `${formState.sex}` : ""}
+                    value={formState.sex}
                   >
                     <MenuItem value="">Select</MenuItem>
                     <MenuItem key="Male" value="Male">Male</MenuItem>
@@ -89,7 +83,7 @@ const CatForm = props => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={isEdit ? formState.birth_date : null}
+                value={formState.birth_date}
               />
             </Grid>
 
@@ -104,24 +98,24 @@ const CatForm = props => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={isEdit ? formState.fixed_date : null}
+                value={formState.fixed_date}
               />
             </Grid>
 
             <Grid item xs={12} sm={4}>  
               <FormControl>
-                <InputLabel id="adoption_status">Adoption Status</InputLabel>
+                <InputLabel id="adoption_status_id">Adoption Status</InputLabel>
                   <Select
                     inputProps={{
                       required: true,
                     }}
                     required
-                    name="adoption_status"
+                    name="adoption_status_id"
                     fullWidth
-                    labelId="adoption_status"
-                    id="adoption_status"
+                    labelId="adoption_status_id"
+                    id="adoption_status_id"
                     onChange={handleFieldChange}
-                    value={isEdit ? parseInt(formState.adoption_status) : null}
+                    defaultValue={isEdit ? parseInt(formState.adoption_status_id) : ""}
                   >
                     <MenuItem value="">Select</MenuItem>
                     {adoptionStatusList.map((status, i) => (
@@ -134,7 +128,7 @@ const CatForm = props => {
             </Grid>
             
             {/* Adopted Status 4 is "Adopted", so then we ask for the date and the adopter */}
-            {formState.adoption_status === 4
+            {formState.adoption_status_id === 4
               ? <>
                   {/* TODO: If Adopted, Adopted Id */}
                   <Grid item xs={12} sm={4}>
@@ -147,7 +141,7 @@ const CatForm = props => {
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      value={isEdit ? formState.adopted_date : null}
+                      value={isEdit ? formState.adopted_date : ""}
                     />
                   </Grid>
                 </>

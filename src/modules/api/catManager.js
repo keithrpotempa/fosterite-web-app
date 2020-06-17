@@ -23,12 +23,11 @@ export default {
     return fetch(`${baseurl}/adoptionstatus`)
       .then((resp) => resp.json())
   },
-  post(obj){
+  post(token, obj){
     // Note: Content-type cannot be set when uploading a file
     
-    // TODO: uncomment once auth is implemented
     const headers = {
-      // Authorization: `Token ${token}`,
+      Authorization: `Token ${token}`,
     }
 
     // If there is no image, 
@@ -44,12 +43,11 @@ export default {
       body: obj
     }).then((resp) => resp.json())
   },
-  // FIXME: CRASHING EVEN THOUGHT IT IS UPDATING...
-  put(obj, id){
+  put(token, obj, id){
     // Note: Content-type cannot be set when uploading a file
-    // TODO: uncomment once auth is implemented
+
     const headers = {
-      // Authorization: `Token ${token}`,
+      Authorization: `Token ${token}`,
     }
 
     // If there is no image, 

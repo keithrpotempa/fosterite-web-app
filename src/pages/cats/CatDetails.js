@@ -3,8 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { catManager, momentManager } from "../../modules";
+import { catManager, momentManager, userManager } from "../../modules";
 import Button from '@material-ui/core/Button';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,10 +21,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CatDetails (props) {
   const [cat, setCat] = useState({})
+  const [user, setUser] = useState({})
 
   const getCat = () => {
     catManager.getCat(props.catId)
-      .then(setCat)
+      .then(resp => {
+        setCat(resp)
+        getUser(resp.creator_id)
+      })
+  }
+
+  const getUser = (id) => {
+    userManager.getUser(id)
+      .then(setUser)
   }
 
   const handleDelete = () => {
@@ -36,6 +47,7 @@ export default function CatDetails (props) {
 
   return (
     <>
+    {/* TODO: Break this up. It's getting too big... */}
       {/* Image: cat.image_path */}
       <Grid display="flex" container spacing={3} m={3}>
         <Grid item xs={12}>
@@ -73,7 +85,7 @@ export default function CatDetails (props) {
             }
         </Grid>
         <Grid item xs={4}>
-          Adoption Status: {cat.adoption_status_id}
+          Adoption Status: {cat.adoption_status ? cat.adoption_status.name : ""}
         </Grid>
         {/* NOTE: 4 is the id of "adopted" */}
         {/* TODO: make that not so awkwardly hard-coded */}
@@ -96,13 +108,27 @@ export default function CatDetails (props) {
         {/* <Grid item xs>
           Breed: {cat.breed}
         </Grid> */}
+
+        {/* ------------ META INFO ------------ */}
+        <Grid item xs={6}>
+          Profile Creator: 
+          <Link 
+            component={RouterLink} 
+            to={`/fosters/${user.id}`}
+          >
+            {`${user.username}`}
+          </Link>
+        </Grid>
         <Grid item xs={6}>
           Profile Creation: {momentManager.getMomentFromNow(cat.created_date)}
         </Grid>
         <Grid item xs={6}>
           Last Modified: {momentManager.getMomentFromNow(cat.modified_date)}
         </Grid>
+
       </Grid>
+
+      {/* ------------ ACTIONS ------------  */}
       {/* TODO: Change to only show if user 
       has proper permissions or created this cat */}
       {props.hasUser 

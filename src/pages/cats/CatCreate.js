@@ -24,18 +24,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CatCreate = props => {
+  // Note: there are more fields than this, 
+  // but these are seeded to keep the app from crashing 
+  // before data is retrieved
   const [formState, setFormState] = useState(
-    // FIXME: once auth is implemented
-    {"creator_id": 1}
+    {
+      "name": "",
+      "sex": "",
+      "adoption_status": "",      
+    }
   )
   const handleFieldChange = (evt) => formHandler.handleFieldChange(evt, formState, setFormState);
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    // const token = window.sessionStorage.getItem("token");
+    const token = window.sessionStorage.getItem("token");
     const formdata = formHandler.gatherFormData(formState)
-    // const token = sessionStorage.getItem("token")
-    catManager.post(formdata)
+    catManager.post(token, formdata)
       .then((resp) => {
         props.history.push({
           pathname: `/cats/${resp.id}`
@@ -51,6 +56,7 @@ const CatCreate = props => {
         handleFieldChange={handleFieldChange}
         handleSubmit={handleSubmit}
         formState={formState}
+        isEdit={false}
       />
     </>
   )

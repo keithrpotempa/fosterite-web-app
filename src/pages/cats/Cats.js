@@ -55,7 +55,6 @@ const Cats = props => {
             {status.name}
           </MenuItem>
         )}
-        <MenuItem key="No" value={false}>No</MenuItem>
       </Select>
 
       {props.hasUser

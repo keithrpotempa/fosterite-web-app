@@ -104,18 +104,18 @@ const CatForm = props => {
 
             <Grid item xs={12} sm={4}>  
               <FormControl>
-                <InputLabel id="adoption_status">Adoption Status</InputLabel>
+                <InputLabel id="adoption_status_id">Adoption Status</InputLabel>
                   <Select
                     inputProps={{
                       required: true,
                     }}
                     required
-                    name="adoption_status"
+                    name="adoption_status_id"
                     fullWidth
-                    labelId="adoption_status"
-                    id="adoption_status"
+                    labelId="adoption_status_id"
+                    id="adoption_status_id"
                     onChange={handleFieldChange}
-                    value={isEdit ? parseInt(formState.adoption_status) : ""}
+                    defaultValue={isEdit ? parseInt(formState.adoption_status_id) : ""}
                   >
                     <MenuItem value="">Select</MenuItem>
                     {adoptionStatusList.map((status, i) => (
@@ -128,7 +128,7 @@ const CatForm = props => {
             </Grid>
             
             {/* Adopted Status 4 is "Adopted", so then we ask for the date and the adopter */}
-            {formState.adoption_status === 4
+            {formState.adoption_status_id === 4
               ? <>
                   {/* TODO: If Adopted, Adopted Id */}
                   <Grid item xs={12} sm={4}>

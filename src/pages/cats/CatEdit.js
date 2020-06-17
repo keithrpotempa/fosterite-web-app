@@ -28,7 +28,7 @@ const CatEdit = props => {
     {
       "name": "",
       "sex": "",
-      "adoption_status": "",      
+      "adoption_status_id": "",      
     }
   )
   const handleFieldChange = (evt) => formHandler.handleFieldChange(evt, formState, setFormState);
@@ -45,14 +45,15 @@ const CatEdit = props => {
       })
   };
 
-  const parseCat = (cat) => {
-    cat.adoption_status = cat.adoption_status_id
-    return cat
-  }
+  // const parseCat = (cat) => {
+  //   cat.adoption_status = cat.adoption_status_id
+  //   return cat
+  // }
 
   const getCat = () => {
     catManager.getCat(props.catId)
-      .then(resp => setFormState(parseCat(resp)))
+      // .then(resp => setFormState(parseCat(resp)))
+      .then(resp => setFormState(resp))
   }
 
   useEffect(() => {

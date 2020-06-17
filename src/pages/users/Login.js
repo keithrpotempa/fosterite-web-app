@@ -46,12 +46,11 @@ const Login = props => {
 
   return (
     <>
-      <form onSubmit={handleLogin}>
-        <LoginForm 
-          handleFieldChange={handleFieldChange}
-          failedLogin={failedLogin}
-        />
-      </form>
+      <LoginForm 
+        handleFieldChange={handleFieldChange}
+        failedLogin={failedLogin}
+        handleLogin={handleLogin}
+      />
     </>
   )
 }

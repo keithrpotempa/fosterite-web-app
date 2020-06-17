@@ -15,11 +15,7 @@ const CatForm = props => {
   const handleFieldChange = props.handleFieldChange;
   const handleSubmit = props.handleSubmit;
   const formState = props.formState;
-
-  let isEdit = false
-  if (Object.keys(props.formState).length !== 0) {
-    isEdit = true
-  }
+  const isEdit = props.isEdit;
 
   const getAdoptionStatusList = () => {
     catManager.getAdoptionStatusList()
@@ -49,7 +45,7 @@ const CatForm = props => {
                 label="Name"
                 autoFocus
                 onChange={handleFieldChange}
-                value={isEdit ? props.formState.name : null}
+                defaultValue={isEdit ? props.formState.name : ""}
               />
             </Grid>
 
@@ -69,7 +65,7 @@ const CatForm = props => {
                     labelId="sex"
                     id="sex"
                     onChange={handleFieldChange}
-                    value={isEdit ? `${formState.sex}` : ""}
+                    defaultValue={isEdit ? `${formState.sex}` : ""}
                   >
                     <MenuItem value="">Select</MenuItem>
                     <MenuItem key="Male" value="Male">Male</MenuItem>
@@ -89,7 +85,7 @@ const CatForm = props => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={isEdit ? formState.birth_date : null}
+                defaultValue={isEdit ? formState.birth_date : ""}
               />
             </Grid>
 
@@ -104,7 +100,7 @@ const CatForm = props => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={isEdit ? formState.fixed_date : null}
+                defaultValue={isEdit ? formState.fixed_date : ""}
               />
             </Grid>
 
@@ -121,7 +117,7 @@ const CatForm = props => {
                     labelId="adoption_status"
                     id="adoption_status"
                     onChange={handleFieldChange}
-                    value={isEdit ? parseInt(formState.adoption_status) : null}
+                    defaultValue={isEdit ? parseInt(formState.adoption_status) : ""}
                   >
                     <MenuItem value="">Select</MenuItem>
                     {adoptionStatusList.map((status, i) => (
@@ -147,7 +143,7 @@ const CatForm = props => {
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      value={isEdit ? formState.adopted_date : null}
+                      defaultValue={isEdit ? formState.adopted_date : ""}
                     />
                   </Grid>
                 </>

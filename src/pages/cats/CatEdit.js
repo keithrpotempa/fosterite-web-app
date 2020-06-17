@@ -65,6 +65,7 @@ const CatEdit = props => {
         handleFieldChange={handleFieldChange}
         handleSubmit={handleSubmit}
         formState={formState}
+        isEdit={true}
       />
     </>
   )

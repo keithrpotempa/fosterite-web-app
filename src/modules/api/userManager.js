@@ -19,4 +19,8 @@ export default {
       body: JSON.stringify(userToLogin),
     }).then((result) => result.json());
   },
+  getUser(id) {
+    return fetch(`${baseurl}/users/${id}`)
+      .then((result) => result.json())
+  }
 }

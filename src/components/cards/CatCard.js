@@ -38,7 +38,7 @@ export default function CatCard(props) {
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="div">
-            Adoption Status: {cat.adoption_status_id}
+            Adoption Status: {cat.adoption_status.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="div">
             Age: {momentManager.getAge(cat.birth_date)}

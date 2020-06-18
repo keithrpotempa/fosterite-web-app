@@ -21,8 +21,8 @@ export default {
     let filteredList = list
     for (const key in filter) {
       filteredList = filteredList
-        // Tricky way to deal with searching for varying depths
-        // on this key/value pair:
+        // Tricky way to deal with searching for 
+        // varying depths on this key/value pair:
         // https://stackoverflow.com/a/31871016/798303
         .filter(item => {
           return JSON.stringify(item)

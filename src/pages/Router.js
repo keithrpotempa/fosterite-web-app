@@ -37,6 +37,18 @@ const Routes = props => {
 
         <Switch>
 
+          {/* Home */}
+          <Route
+            exact
+            path="/"
+            render={(props) => 
+              <Cats
+                hasUser={hasUser}
+                {...props} 
+              />
+            }
+          />
+
           {/* Cat List */}
           <Route
             exact

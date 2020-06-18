@@ -3,74 +3,110 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { fosterManager, momentManager } from "../../modules";
 import Button from '@material-ui/core/Button';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
+import Divider from '@material-ui/core/Divider';
+import { fosterManager, momentManager } from "../../modules";
+import { ProfileCard } from "../../components"
 
 export default function FosterDetails (props) {
-  const [foster, setFoster] = useState({})
+  const [user, setUser] = useState({})
 
   const getFoster = () => {
     fosterManager.getFoster(props.fosterId)
-      .then(setFoster)
+      .then(setUser)
   }
 
   useEffect(() => {
     getFoster()
-  }, [foster])
+  }, [user])
 
   return (
     <>
       {/* Keeps from rendering until it's loaded */}
-      {Object.keys(foster).length === 0
+      {Object.keys(user).length === 0
         ? <></> 
         : <>
             {/* FIXME: Long load causing "undefined" to appear */}
             <Grid display="flex" container spacing={3} m={3}>
+
               <Grid item xs={12}>
                 <Typography variant="h3" component="h3" spacing={2} gutterBottom>
-                  {`${foster.first_name} ${foster.last_name}`}
+                  {`${user.first_name} ${user.last_name}`}
                 </Typography>
               </Grid>
-              <Grid item xs={4}>
-                Username: {foster.username}
+
+              <Grid item xs={12}>
+                <Divider variant="middle"/>
               </Grid>
-              <Grid item xs={4}>
-                Email: {foster.email}
+
+              <Grid item xs={5}>
+                <ProfileCard 
+                  key={"username"}
+                  label={"Username"}
+                  value={user.username}
+                />
+
+                <ProfileCard 
+                  key={"email"}
+                  label={"Email"}
+                  value={user.email}
+                />
+
+                <ProfileCard
+                  key={"city"}
+                  label={"City"}
+                  value={user.foster.city}
+                />
+
               </Grid>
-              <Grid item xs={4}>
-                City: 
-                  {foster.foster.city}
-              </Grid>
-              <Grid item xs={4}>
-                Looking to Foster: 
-                  {foster.foster.looking_to_foster
-                    ? "Yes"
-                    : "No"
+
+              <Divider orientation="vertical" flexItem/>
+
+              <Grid item xs={5}>
+                <ProfileCard 
+                  key={"lookingToFoster"}
+                  label={"Looking to Foster"}
+                  value={
+                    user.foster.looking_to_foster
+                      ? "Yes"
+                      : "No"
                   }
+                />
+
+                <ProfileCard
+                  key={"phone"}
+                  label={"Phone Number"}
+                  value={user.foster.phone}
+                />
+
               </Grid>
-              <Grid item xs={4}>
-                Phone: 
-                  {foster.foster.phone}
+
+              <Grid item xs={12}>
+                <Divider variant="middle"/>
               </Grid>
-              <Grid item xs={4}>
-                Created: 
-                  {momentManager.getMomentFromNow(foster.foster.created_date)}
+
+              {/* ------------ META INFO ------------ */}
+              <Grid 
+                container 
+                xs={12} 
+                direction="row-reverse"
+              >
+                <Typography color="textSecondary" variant="body2">  
+                  {`Created `}  
+                  {momentManager.getMomentFromNow(user.foster.created_date)}
+                </Typography>
               </Grid>
-              <Grid item xs={4}>
-                Last Modified: 
-                  {momentManager.getMomentFromNow(foster.foster.modified_date)}
+
+              <Grid 
+                container 
+                xs={12} 
+                direction="row-reverse"
+              >
+                <Typography color="textSecondary" variant="body2">
+                    Modified: {momentManager.getMomentFromNow(user.foster.modified_date)}
+                </Typography>
               </Grid>
+
             </Grid>
           </>
       }

@@ -51,7 +51,7 @@ export default function FosterCard(props) {
             if they have any that have passed 
           */}
           <Typography variant="body2" color="textSecondary" component="div">
-            Member Since: {momentManager.getMomentFromNow(user.date_joined)}
+            Member Since: {momentManager.getMomentFromNow(user.foster.created_date)}
           </Typography>
         </CardContent>
         <CardActions>

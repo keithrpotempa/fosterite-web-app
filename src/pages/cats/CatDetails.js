@@ -3,21 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { catManager, momentManager, userManager } from "../../modules";
+import { catManager, momentManager, fosterManager } from "../../modules";
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
+import { ProfileCard } from "../../components"
 
 export default function CatDetails (props) {
   const [cat, setCat] = useState({})
@@ -32,7 +23,7 @@ export default function CatDetails (props) {
   }
 
   const getUser = (id) => {
-    userManager.getUser(id)
+    fosterManager.getFoster(id)
       .then(setUser)
   }
 
@@ -55,75 +46,153 @@ export default function CatDetails (props) {
             {cat.name}
           </Typography>
         </Grid>
-        <Grid item xs={4}>
-          Birth Date: {cat.birth_date}
+        
+        <Grid item xs={12}>
+          <Divider variant="middle"/>
         </Grid>
-        <Grid item xs={4}>
-          Age: {momentManager.getAge(cat.birth_date)}
+
+        <Grid item xs={5}>
+
+            <ProfileCard 
+              key={"Birth Date"}
+              label={"Birth Date"}
+              value={
+                cat.birth_date
+                  ? cat.birth_date
+                  : "Unknown"
+              }
+            />
+
+            <ProfileCard
+              key={"Age"}
+              label={"Age"}
+              value={momentManager.getAge(cat.birth_date)}
+            />
+
+            <ProfileCard
+              key={"Sex"}
+              label={"Sex"}
+              value={cat.sex}
+            />
+
         </Grid>
+
+        <Divider orientation="vertical" flexItem/>
+
+        {/* TODO: 
         <Grid item xs={4}>
-          Sex: {cat.sex}
-        </Grid>
-        <Grid item xs={4}>
-          {/* TODO: */}
           Litter: {cat.litter_id}
-        </Grid>
-        <Grid item xs={4}>
-          {/* TODO: */}
-          Bonded Pair: 
-          {cat.bonded_pair_cat_id 
-            ? cat.bonded_pair_cat_id
-            : "No"
-          }
-        </Grid>
-        <Grid item xs>
-          {/* TODO: */}
-          Fixed Date: 
-            {cat.fixed_date
-              ? cat.fixed_date
-              : "None"
-            }
-        </Grid>
-        <Grid item xs={4}>
-          Adoption Status: {cat.adoption_status ? cat.adoption_status.name : ""}
-        </Grid>
-        {/* NOTE: 4 is the id of "adopted" */}
-        {/* TODO: make that not so awkwardly hard-coded */}
-        {cat.adoption_status_id === 4
-          ? <>
-              <Grid item xs={4}>
-                Adopted Date: 
-                {cat.adopted_date
-                  ? cat.adopted_date
+        </Grid> 
+        */}
+        <Grid item xs={5}>
+
+            <ProfileCard 
+              key={"bondedPair"}
+              label={"Bonded Pair"}
+              value={
+                cat.bonded_pair_cat_id 
+                ? cat.bonded_pair_cat_id
+                : "No"  
+              }
+            />
+
+            <ProfileCard
+              key={"fixedDate"}
+              label={"Fixed Date"}
+              value={
+                cat.fixed_date
+                  ? cat.fixed_date
                   : "None"
-                }
-              </Grid>
-              <Grid item xs={4}>
-                Adopted By: {cat.adopted_id}
-              </Grid>
-            </>
-          : null
-        }
+              }
+            />
+
+          {/* TODO: Update this when bonded pair implemented*/}
+
+        </Grid>
+
+        <Grid item xs={12}>
+          <Divider variant="middle"/>
+        </Grid>
+
+        <Grid item xs={5}>
+
+          <ProfileCard 
+            key={"adoptionStatus"}
+            label={"Adoption Status"}
+            value={cat.adoption_status ? cat.adoption_status.name : ""}
+          />
+
+          {/* NOTE: 4 is the id of "adopted" */}
+          {/* TODO: make that not so awkwardly hard-coded */}
+          {cat.adoption_status_id === 4
+            ? <>
+                <ProfileCard 
+                  key={"adoptedDate"}
+                  label={"Adopted Date"}
+                  value={
+                    cat.adopted_date
+                    ? cat.adopted_date
+                    : "None"
+                  }
+                />
+
+                {/* TODO: Make name, not just adopted_id */}
+                {/* <ProfileCard
+                  key={"adoptedBy"}
+                  label={"Adopted By"}
+                  value={cat.adopted_id}
+                /> */}
+              </>
+            : null
+          }
+
+        </Grid>
+
         {/* TODO: STRETCH GOAL */}
         {/* <Grid item xs>
           Breed: {cat.breed}
         </Grid> */}
 
+        <Grid item xs={12}>
+          <Divider variant="middle"/>
+        </Grid>
+
         {/* ------------ META INFO ------------ */}
-        <Grid item xs={6}>
-          Profile Creator: 
-          <Link 
-            component={RouterLink} 
-            to={`/fosters/${user.id}`}
-          >
-            {`${user.username}`}
-          </Link>
+        <Grid 
+          container 
+          xs={12} 
+          direction="row-reverse"
+        >
+          <Typography color="textSecondary" variant="body2">  
+            {`Created `}  
+            {momentManager.getMomentFromNow(cat.created_date)}
+          </Typography>
         </Grid>
-        <Grid item xs={6}>
-          Profile Creation: {momentManager.getMomentFromNow(cat.created_date)}
+        
+        <Grid 
+          container 
+          xs={12} 
+          direction="row-reverse"
+        >
+          <Typography color="textSecondary" variant="body2">
+            {`Created by `}  
+            <Link 
+              component={RouterLink} 
+              to={`/fosters/${user.id}`}
+            >
+              {user ? user.username : ""}
+            </Link>
+          </Typography>
         </Grid>
-        <Grid item xs={6}>
-          Last Modified: {momentManager.getMomentFromNow(cat.modified_date)}
+
+        <Grid 
+          container 
+          xs={12} 
+          direction="row-reverse"
+        >
+          <Typography color="textSecondary" variant="body2">
+              Modified: {momentManager.getMomentFromNow(cat.modified_date)}
+          </Typography>
         </Grid>
 
       </Grid>

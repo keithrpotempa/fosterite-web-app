@@ -30,7 +30,7 @@ const Register = (props) => {
       .register(user)
       .then((resp) => {
         if ("token" in resp) {
-          props.setUserToken(resp);
+          props.setAuth(resp);
           props.history.push("/");
         }
       })

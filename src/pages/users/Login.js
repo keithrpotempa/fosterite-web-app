@@ -28,7 +28,7 @@ const Login = props => {
     userManager.login(user)
       .then(resp => {
         if("token" in resp) {
-          props.setUserToken(resp)
+          props.setAuth(resp)
           props.history.push("/")
         }
         // If there is no token, 

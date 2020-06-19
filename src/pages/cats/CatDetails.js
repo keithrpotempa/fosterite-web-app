@@ -201,23 +201,24 @@ export default function CatDetails (props) {
       {/* TODO: Change to only show if user 
       has proper permissions or created this cat */}
       {props.hasUser 
-        ? <>
-            <Button 
-              variant="contained" 
-              color="primary" 
-              onClick={() => props.history.push(`/cats/edit/${props.catId}`)}
-            >
-              Edit
-            </Button>
-            <Button 
-              variant="contained" 
-              color="primary" 
-              onClick={handleDelete}
-            >
-              Delete
-            </Button>
-          </>
-        : <></>
+        && parseInt(sessionStorage.getItem("user_id")) === parseInt(cat.creator_id) 
+          ? <>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={() => props.history.push(`/cats/edit/${props.catId}`)}
+              >
+                Edit
+              </Button>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
+            </>
+          : <></>
       }
     </>
   )

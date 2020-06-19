@@ -16,8 +16,9 @@ const Routes = props => {
   const isAuthenticated = () => sessionStorage.getItem("token") !== null;
   const [hasUser, setHasUser] = useState(isAuthenticated());
 
-  const setUserToken = (resp) => {
-    sessionStorage.setItem("token", resp.token);
+  const setAuth = (resp) => {
+    sessionStorage.setItem("user_id", resp.user_id)
+    sessionStorage.setItem("token", resp.token)
     setHasUser(isAuthenticated());
   };
 
@@ -135,7 +136,7 @@ const Routes = props => {
               ? (<Redirect to="/" />) 
               : (
                   <Register
-                    setUserToken={setUserToken}
+                    setAuth={setAuth}
                     {...props}
                   />
                 )
@@ -150,7 +151,7 @@ const Routes = props => {
               ? (<Redirect to="/" />) 
               : (
                   <Login
-                    setUserToken={setUserToken}
+                    setAuth={setAuth}
                     {...props}
                   />
                 )
